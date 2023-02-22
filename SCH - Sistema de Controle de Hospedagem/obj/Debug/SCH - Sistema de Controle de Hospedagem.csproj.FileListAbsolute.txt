@@ -1,0 +1,16 @@
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\bin\Debug\SCH - Sistema de Controle de Hospedagem.exe.config
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\bin\Debug\SCH - Sistema de Controle de Hospedagem.exe
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\bin\Debug\SCH - Sistema de Controle de Hospedagem.pdb
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\bin\Debug\BouncyCastle.Crypto.dll
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\bin\Debug\Google.Protobuf.dll
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\bin\Debug\MySql.Data.dll
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\bin\Debug\Google.Protobuf.xml
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\bin\Debug\MySql.Data.xml
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH - Sistema de Controle de Hospedagem.csproj.AssemblyReference.cache
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH___Sistema_de_Controle_de_Hospedagem.Properties.Resources.resources
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH - Sistema de Controle de Hospedagem.csproj.GenerateResource.cache
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH - Sistema de Controle de Hospedagem.csproj.CoreCompileInputs.cache
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH - Sistema de Controle de Hospedagem.csproj.CopyComplete
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH - Sistema de Controle de Hospedagem.exe
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH - Sistema de Controle de Hospedagem.pdb
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH___Sistema_de_Controle_de_Hospedagem.frmPrincipal.resources
