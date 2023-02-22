@@ -11,13 +11,15 @@ using MySql.Data.MySqlClient;
 
 namespace SCH___Sistema_de_Controle_de_Hospedagem
 {
-    public partial class Form1 : Form
+    public partial class frmPrincipal : Form
     {
         ConexaoDB conexao = new ConexaoDB(); // Instância do objeto de conexão com o banco de dados
-        string sql; // string que armazena a query SQL
-        MySqlCommand cmd; // string que armazena a query SQL
+        string sql; // String que armazena a query SQL
+        MySqlCommand cmd; // String que armazena a query SQL
 
-        public Form1()
+        string id; // String que armazena o id de registro do cliente  
+
+        public frmPrincipal()
         {
             InitializeComponent();
     }
@@ -78,6 +80,8 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
             Des_Habiliatar(0, false);
             ListagemGridDB();
+
+            MessageBox.Show("Registro salvo com sucesso!", "Salvo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -89,30 +93,50 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Deseja realizar essa exclusão?", "Excluir Cliente", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
             Des_Habiliatar(0, false);
             btnExcluir.Enabled = false;
             btnEditar.Enabled = false;
+
+            conexao.AbrirConcexao();
+
+            sql = "DELETE FROM `cliente` WHERE id=@id";
+
+            cmd = new MySqlCommand(sql, conexao.conex);
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.ExecuteNonQuery();
+
+            conexao.FecharConexao();
+
+            ListagemGridDB();
+
+            MessageBox.Show("Exclusão feita com sucesso!", "Excluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Deseja realizar essa edição?", "Salvar Edição", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
             if (txtNome.Text.ToString().Trim() == "")
             {
-                MessageBox.Show("Preencha o campo nome!");
+                MessageBox.Show("Preencha o campo nome!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtNome.Text = "";
                 txtNome.Focus();
                 return;
             }
             else if (!ValidaCPF(mskTxtCPF.Text))
             {
-                MessageBox.Show("Esse CPF é invalido!");
+                MessageBox.Show("Esse CPF é invalido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 mskTxtCPF.Text = "";
                 mskTxtCPF.Focus();
                 return;
             }
             else if (mskTxtTelCel.Text.ToString().Trim() == "")
             {
-                MessageBox.Show("Preencha o campo Telefone!");
+                MessageBox.Show("Preencha o campo Telefone!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 mskTxtTelCel.Text = "";
                 mskTxtTelCel.Focus();
                 return;
@@ -124,12 +148,13 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             conexao.AbrirConcexao(); // Abre a conexão com o banco de dados
 
             // Define a query SQL para atualizar o cadastro de um cliente
-            sql = "UPDATE cliente SET nome=@nome, endereco=@endereco, cpf=@cpf, telefone=@telefone";
+            sql = "UPDATE cliente SET nome=@nome, endereco=@endereco, cpf=@cpf, telefone=@telefone WHERE id=@id";
 
             // Instancia um novo objeto MySqlCommand, passando a query SQL e a conexão com o banco de dados como parâmetros
             cmd = new MySqlCommand(sql, conexao.conex);
 
             // Define os parâmetros da query SQL, passando os valores dos campos de cadastro
+            cmd.Parameters.AddWithValue("id", id);
             cmd.Parameters.AddWithValue("@nome", txtNome.Text);
             cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
             cmd.Parameters.AddWithValue("@cpf", mskTxtCPF.Text.Replace(",", "."));
@@ -139,12 +164,22 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             conexao.FecharConexao(); // Fecha a conexão com o banco de dados
 
             Des_Habiliatar(0, false);
+            btnEditar.Enabled = false;
+            btnExcluir.Enabled = false;
             ListagemGridDB();
+
+            MessageBox.Show("Edição feita com sucesso!", "Editado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            Buscar(txtBuscar.Text);
         }
 
         private void dataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             Des_Habiliatar(2, true);
+            id = dataGrid.CurrentRow.Cells[0].Value.ToString();
             txtNome.Text = dataGrid.CurrentRow.Cells[1].Value.ToString();
             txtEndereco.Text = dataGrid.CurrentRow.Cells[2].Value.ToString();
             mskTxtCPF.Text = dataGrid.CurrentRow.Cells[3].Value.ToString().Replace(".",",");
@@ -279,15 +314,42 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
         private void ListagemGridDB()
         {
             conexao.AbrirConcexao(); 
+
             sql = "SELECT * FROM cliente ORDER BY NOME ASC"; // Define a consulta SQL para selecionar todos os registros da tabela cliente ordenados pelo nome
-            cmd = new MySqlCommand(sql, conexao.conex); 
+            
+            cmd = new MySqlCommand(sql, conexao.conex);
+            
             MySqlDataAdapter da = new MySqlDataAdapter(); 
             da.SelectCommand = cmd;  // Atribui o objeto do tipo MySqlCommand ao objeto do tipo MySqlDataAdapter
             DataTable dt = new DataTable(); 
             da.Fill(dt); // Preenche o objeto do tipo DataTable com os dados do banco de dados usando o objeto do tipo MySqlDataAdapter
             dataGrid.DataSource = dt; // Atribui o objeto do tipo DataTable como fonte de dados do grid
+            
             conexao.FecharConexao(); 
+            
             FormatacaoGrid(); // Formata as colunas do grid
+        }
+
+        // Realiza uma consulta no banco de dados para buscar por um clientes atraves do nomes
+        private void Buscar(string nome)
+        {
+            conexao.AbrirConcexao();
+
+            sql = "SELECT * FROM cliente WHERE nome LIKE @nome ORDER BY nome ASC";
+
+            cmd = new MySqlCommand(sql, conexao.conex);
+
+            cmd.Parameters.AddWithValue("@nome", nome + "%");
+
+            MySqlDataAdapter da = new MySqlDataAdapter();
+            da.SelectCommand = cmd;  
+            DataTable dt = new DataTable();
+            da.Fill(dt); 
+            dataGrid.DataSource = dt;
+
+            conexao.FecharConexao();
+
+            FormatacaoGrid();
         }
 
     }

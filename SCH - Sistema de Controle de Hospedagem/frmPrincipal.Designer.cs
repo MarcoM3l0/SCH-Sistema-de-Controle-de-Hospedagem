@@ -1,7 +1,7 @@
 ﻿
 namespace SCH___Sistema_de_Controle_de_Hospedagem
 {
-    partial class Form1
+    partial class frmPrincipal
     {
         /// <summary>
         /// Variável de designer necessária.
@@ -29,6 +29,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPrincipal));
             this.txtNome = new System.Windows.Forms.TextBox();
             this.txtEndereco = new System.Windows.Forms.TextBox();
             this.lblNome = new System.Windows.Forms.Label();
@@ -46,7 +47,6 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.label1 = new System.Windows.Forms.Label();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -209,17 +209,18 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             // txtBuscar
             // 
             this.txtBuscar.BackColor = System.Drawing.SystemColors.Window;
-            this.txtBuscar.Enabled = false;
             this.txtBuscar.ForeColor = System.Drawing.SystemColors.WindowText;
             this.txtBuscar.Location = new System.Drawing.Point(565, 64);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(323, 20);
             this.txtBuscar.TabIndex = 10;
+            this.txtBuscar.TextChanged += new System.EventHandler(this.txtBuscar_TextChanged);
             // 
             // dataGrid
             // 
             this.dataGrid.AllowUserToAddRows = false;
             this.dataGrid.AllowUserToDeleteRows = false;
+            this.dataGrid.BackgroundColor = System.Drawing.Color.White;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGrid.Location = new System.Drawing.Point(15, 238);
             this.dataGrid.Name = "dataGrid";
@@ -228,11 +229,11 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.dataGrid.TabIndex = 11;
             this.dataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellClick);
             // 
-            // Form1
+            // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(168)))), ((int)(((byte)(30)))));
             this.ClientSize = new System.Drawing.Size(899, 450);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.label1);
@@ -251,8 +252,9 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.Controls.Add(this.lblNome);
             this.Controls.Add(this.txtEndereco);
             this.Controls.Add(this.txtNome);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "frmPrincipal";
+            this.Text = "Cadastros de Clientes";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             this.ResumeLayout(false);
@@ -279,7 +281,6 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.DataGridView dataGrid;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

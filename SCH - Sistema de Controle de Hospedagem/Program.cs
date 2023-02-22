@@ -16,7 +16,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new frmPrincipal());
         }
     }
 }
