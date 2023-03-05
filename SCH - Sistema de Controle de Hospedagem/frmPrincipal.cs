@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,10 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
         string id; // String que armazena o id de registro do cliente  
 
+        string fotoUsuario; // String que armazena o caminho da foto
+
+        string mudouFoto = "não"; // String de controle
+
         public frmPrincipal()
         {
             InitializeComponent();
@@ -26,12 +31,17 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Limpar();
             ListagemGridDB();
         }
 
         private void btnNovoCadastro_Click(object sender, EventArgs e)
         {
-            Des_Habiliatar(0, true);
+            HabilitarBotoes(true);
+            HabilitarTxt(true);
+            btnNovoCadastro.Enabled = false;
+            btnExcluir.Enabled = false;
+            btnEditar.Enabled = false;
             txtNome.Focus();
         }
 
@@ -60,11 +70,12 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             }
 
 
-            Des_Habiliatar(1, false);
+            HabilitarBotoes(false);
+            HabilitarTxt(false);
             conexao.AbrirConcexao(); // Abre a conexão com o banco de dados
 
             // Define a query SQL para inserir um novo cliente
-            sql = "INSERT INTO cliente (nome, endereco, cpf, telefone) VALUES(@nome, @endereco, @cpf, @telefone)";
+            sql = "INSERT INTO cliente (nome, endereco, cpf, telefone, foto) VALUES(@nome, @endereco, @cpf, @telefone, @foto)";
 
             // Instancia um novo objeto MySqlCommand, passando a query SQL e a conexão com o banco de dados como parâmetros
             cmd = new MySqlCommand(sql, conexao.conex);
@@ -74,11 +85,14 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
             cmd.Parameters.AddWithValue("@cpf", mskTxtCPF.Text.Replace(",", "."));
             cmd.Parameters.AddWithValue("@telefone", mskTxtTelCel.Text);
+            cmd.Parameters.AddWithValue("foto", Img());
 
             cmd.ExecuteNonQuery(); // Executa a query SQL
             conexao.FecharConexao(); // Fecha a conexão com o banco de dados
 
-            Des_Habiliatar(0, false);
+            
+            Limpar();
+            btnNovoCadastro.Enabled = true;
             ListagemGridDB();
 
             MessageBox.Show("Registro salvo com sucesso!", "Salvo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -86,9 +100,11 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            Des_Habiliatar(0, false);
-            btnExcluir.Enabled = false;
-            btnEditar.Enabled = false;
+            HabilitarBotoes(false);
+            HabilitarTxt(false);
+            Limpar();
+            mudouFoto = "não";
+            btnNovoCadastro.Enabled = true;
         }
 
         private void btnExcluir_Click(object sender, EventArgs e)
@@ -96,9 +112,11 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             if (MessageBox.Show("Deseja realizar essa exclusão?", "Excluir Cliente", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
 
-            Des_Habiliatar(0, false);
-            btnExcluir.Enabled = false;
-            btnEditar.Enabled = false;
+            
+            HabilitarBotoes(false);
+            HabilitarTxt(false);
+            Limpar();
+            btnNovoCadastro.Enabled = true;
 
             conexao.AbrirConcexao();
 
@@ -143,32 +161,67 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             }
 
 
-            Des_Habiliatar(1, false);
+            HabilitarBotoes(false);
+            HabilitarTxt(false);
 
             conexao.AbrirConcexao(); // Abre a conexão com o banco de dados
+            if (mudouFoto == "sim")
+            {
+                // Define a query SQL para atualizar o cadastro de um cliente
+                sql = "UPDATE cliente SET nome=@nome, endereco=@endereco, cpf=@cpf, telefone=@telefone, foto=@foto WHERE id=@id";
 
-            // Define a query SQL para atualizar o cadastro de um cliente
-            sql = "UPDATE cliente SET nome=@nome, endereco=@endereco, cpf=@cpf, telefone=@telefone WHERE id=@id";
+                // Instancia um novo objeto MySqlCommand, passando a query SQL e a conexão com o banco de dados como parâmetros
+                cmd = new MySqlCommand(sql, conexao.conex);
 
-            // Instancia um novo objeto MySqlCommand, passando a query SQL e a conexão com o banco de dados como parâmetros
-            cmd = new MySqlCommand(sql, conexao.conex);
+                // Define os parâmetros da query SQL, passando os valores dos campos de cadastro
+                cmd.Parameters.AddWithValue("id", id);
+                cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
+                cmd.Parameters.AddWithValue("@cpf", mskTxtCPF.Text.Replace(",", "."));
+                cmd.Parameters.AddWithValue("@telefone", mskTxtTelCel.Text);
+                cmd.Parameters.AddWithValue("foto", Img());
+            }
+            else if (mudouFoto == "não")
+            {
+                // Define a query SQL para atualizar o cadastro de um cliente
+                sql = "UPDATE cliente SET nome=@nome, endereco=@endereco, cpf=@cpf, telefone=@telefone WHERE id=@id";
 
-            // Define os parâmetros da query SQL, passando os valores dos campos de cadastro
-            cmd.Parameters.AddWithValue("id", id);
-            cmd.Parameters.AddWithValue("@nome", txtNome.Text);
-            cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
-            cmd.Parameters.AddWithValue("@cpf", mskTxtCPF.Text.Replace(",", "."));
-            cmd.Parameters.AddWithValue("@telefone", mskTxtTelCel.Text);
+                // Instancia um novo objeto MySqlCommand, passando a query SQL e a conexão com o banco de dados como parâmetros
+                cmd = new MySqlCommand(sql, conexao.conex);
+
+                // Define os parâmetros da query SQL, passando os valores dos campos de cadastro
+                cmd.Parameters.AddWithValue("id", id);
+                cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
+                cmd.Parameters.AddWithValue("@cpf", mskTxtCPF.Text.Replace(",", "."));
+                cmd.Parameters.AddWithValue("@telefone", mskTxtTelCel.Text);
+            }
+
 
             cmd.ExecuteNonQuery(); // Executa a query SQL
             conexao.FecharConexao(); // Fecha a conexão com o banco de dados
 
-            Des_Habiliatar(0, false);
-            btnEditar.Enabled = false;
-            btnExcluir.Enabled = false;
+            Limpar();
+            btnNovoCadastro.Enabled = true;
             ListagemGridDB();
 
             MessageBox.Show("Edição feita com sucesso!", "Editado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnFoto_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog Foto = new OpenFileDialog();
+            Foto.Filter = "Foto(*.jpg; *.png) | *.jpg; *.png";
+
+            if (Foto.ShowDialog() == DialogResult.OK)
+            {
+                mudouFoto = "sim";
+                fotoUsuario = Foto.FileName.ToString(); // Pega o caminho do arquivo da foto
+                foto.ImageLocation = fotoUsuario;
+            }
+            else
+                mudouFoto = "não";
+
         }
 
         private void txtBuscar_TextChanged(object sender, EventArgs e)
@@ -178,65 +231,63 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
         private void dataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            Des_Habiliatar(2, true);
+            if (e.RowIndex <= -1)
+                return;
+
+            mudouFoto = "não";
+
+            HabilitarBotoes(true);
+            HabilitarTxt(true);
+            btnNovoCadastro.Enabled = false;
+            btnSalvar.Enabled = false;
             id = dataGrid.CurrentRow.Cells[0].Value.ToString();
             txtNome.Text = dataGrid.CurrentRow.Cells[1].Value.ToString();
             txtEndereco.Text = dataGrid.CurrentRow.Cells[2].Value.ToString();
             mskTxtCPF.Text = dataGrid.CurrentRow.Cells[3].Value.ToString().Replace(".",",");
             mskTxtTelCel.Text = dataGrid.CurrentRow.Cells[4].Value.ToString();
+
+            if (dataGrid.CurrentRow.Cells[5].Value != DBNull.Value)
+            {
+                byte[] imagem = (byte[])dataGrid.Rows[e.RowIndex].Cells[5].Value;
+
+                MemoryStream memoryStream = new MemoryStream(imagem);
+
+                foto.Image = Image.FromStream(memoryStream);
+            }
+            else
+                foto.Image = Properties.Resources.Perfil;
         }
 
         // Método que habilita ou desabilita a edição dos campos de cadastro
-        private void Des_Habiliatar(int txt = 0, bool dh = false)
+        private void HabilitarBotoes(bool dh = false)
         {
-            if (txt == 0)
-            {
-                // Limpa os campos de cadastro
-                txtNome.Text = "";
-                txtEndereco.Text = "";
-                mskTxtCPF.Text = "";
-                mskTxtTelCel.Text = "";
-
-                // Define a propriedade Enabled de cada controle de acordo com o parâmetro do método
-                txtNome.Enabled = dh;
-                txtNome.Enabled = dh;
-                txtEndereco.Enabled = dh;
-                mskTxtCPF.Enabled = dh;
-                mskTxtTelCel.Enabled = dh;
-                btnNovoCadastro.Enabled = !dh;
-                btnSalvar.Enabled = dh;
-                btnExcluir.Enabled = !dh;
-                btnCancelar.Enabled = dh;
-                btnEditar.Enabled = !dh;
-
-            }
-            else if (txt == 1)
-            {
-                txtNome.Enabled = dh;
-                txtNome.Enabled = dh;
-                txtEndereco.Enabled = dh;
-                mskTxtCPF.Enabled = dh;
-                mskTxtTelCel.Enabled = dh;
-                btnNovoCadastro.Enabled = dh;
-                btnSalvar.Enabled = dh;
-                btnExcluir.Enabled = dh;
-                btnCancelar.Enabled = dh;
-                btnEditar.Enabled = dh;
-            }
-            else if(txt == 2)
-            {
-                txtNome.Enabled = dh;
-                txtNome.Enabled = dh;
-                txtEndereco.Enabled = dh;
-                mskTxtCPF.Enabled = dh;
-                mskTxtTelCel.Enabled = dh;
-                btnNovoCadastro.Enabled = !dh;
-                btnSalvar.Enabled = !dh;
-                btnExcluir.Enabled = dh;
-                btnCancelar.Enabled = dh;
-                btnEditar.Enabled = dh;
-            }
+            btnNovoCadastro.Enabled = dh;
+            btnSalvar.Enabled = dh;
+            btnExcluir.Enabled = dh;
+            btnCancelar.Enabled = dh;
+            btnEditar.Enabled = dh;
+            btnFoto.Enabled = dh;
         }
+
+        private void HabilitarTxt(bool dh = false)
+        {
+            txtNome.Enabled = dh;
+            txtEndereco.Enabled = dh;
+            mskTxtCPF.Enabled = dh;
+            mskTxtTelCel.Enabled = dh;
+        }
+
+        private void Limpar()
+        {
+            txtNome.Text = "";
+            txtEndereco.Text = "";
+            mskTxtCPF.Text = "";
+            mskTxtTelCel.Text = "";
+
+            foto.Image = Properties.Resources.Perfil;
+            fotoUsuario = @"foto\Perfil.png";
+        }
+        
 
         // O método ValidaCPF retorna True para um CPF válido e False para um CPF inválido
         // Código da DevMedia: http://www.devmedia.com.br/articles/viewcomp_forprint.asp?comp=3950
@@ -308,6 +359,9 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             dataGrid.Columns[2].HeaderText = "Endereço";
             dataGrid.Columns[3].HeaderText = "CPF";
             dataGrid.Columns[4].HeaderText = "Telefone";
+            dataGrid.Columns[5].HeaderText = "Foto";
+
+            dataGrid.Columns[5].Visible = false;
         }
 
         // Função para carregar os dados do banco de dados no grid
@@ -352,5 +406,18 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             FormatacaoGrid();
         }
 
-    }
+        // metodo para enviar imagem para  banco de dados
+        private byte[] Img()
+        {
+            byte[] imagem = null;
+            FileStream fileStream = new FileStream(fotoUsuario, FileMode.Open, FileAccess.Read);
+            BinaryReader binaryReader = new BinaryReader(fileStream);
+
+            imagem = binaryReader.ReadBytes((int)fileStream.Length);
+
+            return imagem;
+                
+        }
+
+    } // Fim
 }

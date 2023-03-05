@@ -47,7 +47,10 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.label1 = new System.Windows.Forms.Label();
             this.txtBuscar = new System.Windows.Forms.TextBox();
             this.dataGrid = new System.Windows.Forms.DataGridView();
+            this.foto = new System.Windows.Forms.PictureBox();
+            this.btnFoto = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.foto)).BeginInit();
             this.SuspendLayout();
             // 
             // txtNome
@@ -72,7 +75,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             // 
             this.lblNome.AutoSize = true;
             this.lblNome.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNome.Location = new System.Drawing.Point(23, 62);
+            this.lblNome.Location = new System.Drawing.Point(24, 62);
             this.lblNome.Name = "lblNome";
             this.lblNome.Size = new System.Drawing.Size(44, 15);
             this.lblNome.TabIndex = 0;
@@ -200,7 +203,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(516, 67);
+            this.label1.Location = new System.Drawing.Point(440, 62);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(48, 15);
             this.label1.TabIndex = 9;
@@ -210,7 +213,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             // 
             this.txtBuscar.BackColor = System.Drawing.SystemColors.Window;
             this.txtBuscar.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.txtBuscar.Location = new System.Drawing.Point(565, 64);
+            this.txtBuscar.Location = new System.Drawing.Point(494, 57);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(323, 20);
             this.txtBuscar.TabIndex = 10;
@@ -229,12 +232,38 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.dataGrid.TabIndex = 11;
             this.dataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellClick);
             // 
+            // foto
+            // 
+            this.foto.BackColor = System.Drawing.SystemColors.Window;
+            this.foto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.foto.Image = global::SCH___Sistema_de_Controle_de_Hospedagem.Properties.Resources.Perfil;
+            this.foto.Location = new System.Drawing.Point(558, 88);
+            this.foto.Name = "foto";
+            this.foto.Size = new System.Drawing.Size(129, 146);
+            this.foto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.foto.TabIndex = 12;
+            this.foto.TabStop = false;
+            // 
+            // btnFoto
+            // 
+            this.btnFoto.Enabled = false;
+            this.btnFoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFoto.Location = new System.Drawing.Point(570, 235);
+            this.btnFoto.Name = "btnFoto";
+            this.btnFoto.Size = new System.Drawing.Size(105, 25);
+            this.btnFoto.TabIndex = 14;
+            this.btnFoto.Text = "Selecionar Foto";
+            this.btnFoto.UseVisualStyleBackColor = true;
+            this.btnFoto.Click += new System.EventHandler(this.btnFoto_Click);
+            // 
             // frmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(198)))), ((int)(((byte)(168)))), ((int)(((byte)(30)))));
-            this.ClientSize = new System.Drawing.Size(899, 450);
+            this.ClientSize = new System.Drawing.Size(828, 450);
+            this.Controls.Add(this.btnFoto);
+            this.Controls.Add(this.foto);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtBuscar);
@@ -257,6 +286,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.Text = "Cadastros de Clientes";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.foto)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -281,6 +311,8 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtBuscar;
         private System.Windows.Forms.DataGridView dataGrid;
+        private System.Windows.Forms.PictureBox foto;
+        private System.Windows.Forms.Button btnFoto;
     }
 }
 
