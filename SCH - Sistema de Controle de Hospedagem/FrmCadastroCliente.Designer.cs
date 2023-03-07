@@ -256,7 +256,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.foto.TabIndex = 12;
             this.foto.TabStop = false;
             // 
-            // frmCadastroCliente
+            // FrmCadastroCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -282,10 +282,10 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.Controls.Add(this.txtEndereco);
             this.Controls.Add(this.txtNome);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmCadastroCliente";
+            this.Name = "FrmCadastroCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastros de Clientes";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.FrmCadastroCliente_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.foto)).EndInit();
             this.ResumeLayout(false);

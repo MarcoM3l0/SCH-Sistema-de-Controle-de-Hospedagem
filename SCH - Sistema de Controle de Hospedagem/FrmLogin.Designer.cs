@@ -105,6 +105,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.btnEntrar.TabIndex = 10;
             this.btnEntrar.Text = "ENTRAR";
             this.btnEntrar.UseVisualStyleBackColor = true;
+            this.btnEntrar.Click += new System.EventHandler(this.btnEntrar_Click);
             // 
             // FrmLogin
             // 

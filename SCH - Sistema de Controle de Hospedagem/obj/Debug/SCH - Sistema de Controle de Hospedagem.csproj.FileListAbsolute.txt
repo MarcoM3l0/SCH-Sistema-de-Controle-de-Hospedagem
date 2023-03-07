@@ -16,3 +16,4 @@ D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Siste
 D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH___Sistema_de_Controle_de_Hospedagem.frmPrincipal.resources
 D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH___Sistema_de_Controle_de_Hospedagem.FrmCadastroCliente.resources
 D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH___Sistema_de_Controle_de_Hospedagem.FrmLogin.resources
+D:\DADOS\Usuario\Desktop\dev\SCH - Sistema de Controle de Hospedagem\SCH - Sistema de Controle de Hospedagem\obj\Debug\SCH___Sistema_de_Controle_de_Hospedagem.FrmCadastroUsuario.resources

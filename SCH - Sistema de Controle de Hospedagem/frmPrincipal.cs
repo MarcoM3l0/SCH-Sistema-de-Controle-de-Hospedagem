@@ -28,5 +28,13 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             FrmCadastroUsuario frm = new FrmCadastroUsuario();
             frm.ShowDialog();
         }
+
+        private void sairToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmLogin frm = new FrmLogin();
+            frm.Show();
+            this.Close();
+        }
+
     }
 }

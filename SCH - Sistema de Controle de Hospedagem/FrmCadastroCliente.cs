@@ -26,12 +26,13 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
         string CPFAntigo;
 
+
         public FrmCadastroCliente()
         {
             InitializeComponent();
-    }
+        }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void FrmCadastroCliente_Load(object sender, EventArgs e)
         {
             Limpar();
             ListagemGridDB();
@@ -49,7 +50,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if(txtNome.Text.ToString().Trim() == "")
+            if(txtNome.Text.Trim() == "")
             {
                 MessageBox.Show("Preencha o campo nome!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtNome.Text = "";
@@ -70,7 +71,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
                 mskTxtCPF.Focus();
                 return;
             }
-            else if( mskTxtTelCel.Text.ToString().Trim() == "")
+            else if( mskTxtTelCel.Text.Trim() == "")
             {
                 MessageBox.Show("Preencha o campo Telefone!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 mskTxtTelCel.Text = "";
@@ -148,7 +149,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             if (MessageBox.Show("Deseja realizar essa edição?", "Salvar Edição", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
 
-            if (txtNome.Text.ToString().Trim() == "")
+            if (txtNome.Text.Trim() == "")
             {
                 MessageBox.Show("Preencha o campo nome!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtNome.Text = "";
@@ -169,7 +170,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
                 mskTxtCPF.Focus();
                 return;
             }
-            else if (mskTxtTelCel.Text.ToString().Trim() == "")
+            else if (mskTxtTelCel.Text.Trim() == "")
             {
                 MessageBox.Show("Preencha o campo Telefone!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 mskTxtTelCel.Text = "";
