@@ -171,6 +171,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.Name = "FrmCadastroUsuario";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastro Usuario";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmCadastroUsuario_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

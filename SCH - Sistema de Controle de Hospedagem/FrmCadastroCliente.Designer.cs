@@ -285,6 +285,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.Name = "FrmCadastroCliente";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cadastros de Clientes";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmCadastroCliente_FormClosed);
             this.Load += new System.EventHandler(this.FrmCadastroCliente_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.foto)).EndInit();
