@@ -10,7 +10,12 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 {
     class ConexaoDB
     {
-        public string conexao = "SERVER=localhost; DATABASE=bd_forpro_hotel; UID=root; PWD=; PORT=;"; // string de conexão com o banco de dados
+        // Conexão com o banco de dados local
+        // -> public string conexao = "SERVER=localhost; DATABASE=bd_forpro_hotel; UID=root; PWD=; PORT=;";
+
+        // Conexão com o banco de dados remoto
+
+        public string conexao = "SERVER=mysql248.umbler.com; DATABASE=for_pro_hotel_db; UID=m4rc0; PWD=123456789a; PORT=41890;";
 
         public MySqlConnection conex = null; // objeto de conexão com o banco de dados
 

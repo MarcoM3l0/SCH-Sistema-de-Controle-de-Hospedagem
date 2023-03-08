@@ -228,7 +228,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.dataGrid.Location = new System.Drawing.Point(15, 238);
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.ReadOnly = true;
-            this.dataGrid.Size = new System.Drawing.Size(537, 140);
+            this.dataGrid.Size = new System.Drawing.Size(582, 200);
             this.dataGrid.TabIndex = 11;
             this.dataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellClick);
             // 
@@ -236,7 +236,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             // 
             this.btnFoto.Enabled = false;
             this.btnFoto.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFoto.Location = new System.Drawing.Point(570, 235);
+            this.btnFoto.Location = new System.Drawing.Point(403, 130);
             this.btnFoto.Name = "btnFoto";
             this.btnFoto.Size = new System.Drawing.Size(105, 25);
             this.btnFoto.TabIndex = 14;
@@ -249,7 +249,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             this.foto.BackColor = System.Drawing.SystemColors.Window;
             this.foto.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.foto.Image = global::SCH___Sistema_de_Controle_de_Hospedagem.Properties.Resources.Perfil;
-            this.foto.Location = new System.Drawing.Point(558, 88);
+            this.foto.Location = new System.Drawing.Point(514, 83);
             this.foto.Name = "foto";
             this.foto.Size = new System.Drawing.Size(129, 146);
             this.foto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
