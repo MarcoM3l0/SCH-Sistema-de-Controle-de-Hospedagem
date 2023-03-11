@@ -28,7 +28,6 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
         {
             FrmCadastroUsuario frm = new FrmCadastroUsuario();
             frm.Show();
-            this.Dispose();
             this.Close();
         }
 
@@ -36,9 +35,15 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
         {
             FrmLogin frm = new FrmLogin();
             frm.Show();
-            this.Dispose();
             this.Close();
         }
 
+        private void relatorioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Relatorio.FrmClientes frm = new Relatorio.FrmClientes();
+            frm.Show();
+            this.Close();
+
+        }
     }
 }
