@@ -50,63 +50,69 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if(txtNome.Text.Trim() == "")
-            {
-                MessageBox.Show("Preencha o campo nome!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtNome.Text = "";
-                txtNome.Focus();
-                return;
-            }
-            else if (!ValidaCPF(mskTxtCPF.Text))
-            {
-                MessageBox.Show("Esse CPF é invalido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                mskTxtCPF.Text = "";
-                mskTxtCPF.Focus();
-                return;
-            }
-            else if (TemCPF(mskTxtCPF.Text, CPFAntigo))
-            {
-                MessageBox.Show("Esse CPF já tem cadastro.", "Cadastrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                mskTxtCPF.Text = "";
-                mskTxtCPF.Focus();
-                return;
-            }
-            else if( mskTxtTelCel.Text.Trim() == "")
-            {
-                MessageBox.Show("Preencha o campo Telefone!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                mskTxtTelCel.Text = "";
-                mskTxtTelCel.Focus();
-                return;
-            }
+            try 
+            { 
+                if(txtNome.Text.Trim() == "")
+                {
+                    MessageBox.Show("Preencha o campo nome!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtNome.Text = "";
+                    txtNome.Focus();
+                    return;
+                }
+                else if (!ValidaCPF(mskTxtCPF.Text))
+                {
+                    MessageBox.Show("Esse CPF é invalido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mskTxtCPF.Text = "";
+                    mskTxtCPF.Focus();
+                    return;
+                }
+                else if (TemCPF(mskTxtCPF.Text, CPFAntigo))
+                {
+                    MessageBox.Show("Esse CPF já tem cadastro.", "Cadastrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    mskTxtCPF.Text = "";
+                    mskTxtCPF.Focus();
+                    return;
+                }
+                else if( mskTxtTelCel.Text.Trim() == "")
+                {
+                    MessageBox.Show("Preencha o campo Telefone!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mskTxtTelCel.Text = "";
+                    mskTxtTelCel.Focus();
+                    return;
+                }
 
 
-            HabilitarBotoes(false);
-            HabilitarTxt(false);
-            conexao.AbrirConcexao(); // Abre a conexão com o banco de dados
+                HabilitarBotoes(false);
+                HabilitarTxt(false);
+                conexao.AbrirConcexao(); // Abre a conexão com o banco de dados
 
-            // Define a query SQL para inserir um novo cliente
-            sql = "INSERT INTO cliente (nome, endereco, cpf, telefone, foto) VALUES(@nome, @endereco, @cpf, @telefone, @foto)";
+                // Define a query SQL para inserir um novo cliente
+                sql = "INSERT INTO cliente (nome, endereco, cpf, telefone, foto) VALUES(@nome, @endereco, @cpf, @telefone, @foto)";
 
-            // Instancia um novo objeto MySqlCommand, passando a query SQL e a conexão com o banco de dados como parâmetros
-            cmd = new MySqlCommand(sql, conexao.conex);
+                // Instancia um novo objeto MySqlCommand, passando a query SQL e a conexão com o banco de dados como parâmetros
+                cmd = new MySqlCommand(sql, conexao.conex);
 
-            // Define os parâmetros da query SQL, passando os valores dos campos de cadastro
-            cmd.Parameters.AddWithValue("@nome", txtNome.Text);
-            cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
-            cmd.Parameters.AddWithValue("@cpf", mskTxtCPF.Text.Replace(",", "."));
-            cmd.Parameters.AddWithValue("@telefone", mskTxtTelCel.Text);
-            cmd.Parameters.AddWithValue("foto", Img());
+                // Define os parâmetros da query SQL, passando os valores dos campos de cadastro
+                cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
+                cmd.Parameters.AddWithValue("@cpf", mskTxtCPF.Text.Replace(",", "."));
+                cmd.Parameters.AddWithValue("@telefone", mskTxtTelCel.Text);
+                cmd.Parameters.AddWithValue("foto", Img());
 
-            cmd.ExecuteNonQuery(); // Executa a query SQL
-            conexao.FecharConexao(); // Fecha a conexão com o banco de dados
+                cmd.ExecuteNonQuery(); // Executa a query SQL
+                conexao.FecharConexao(); // Fecha a conexão com o banco de dados
 
             
-            Limpar();
-            btnNovoCadastro.Enabled = true;
-            ListagemGridDB();
+                Limpar();
+                btnNovoCadastro.Enabled = true;
+                ListagemGridDB();
 
-            MessageBox.Show("Registro salvo com sucesso!", "Salvo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                MessageBox.Show("Registro salvo com sucesso!", "Salvo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocorreu um erro ao salvar o registro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -146,100 +152,113 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Deseja realizar essa edição?", "Salvar Edição", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                return;
+            try 
+            { 
+                if (MessageBox.Show("Deseja realizar essa edição?", "Salvar Edição", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    return;
 
-            if (txtNome.Text.Trim() == "")
-            {
-                MessageBox.Show("Preencha o campo nome!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtNome.Text = "";
-                txtNome.Focus();
-                return;
+                if (txtNome.Text.Trim() == "")
+                {
+                    MessageBox.Show("Preencha o campo nome!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtNome.Text = "";
+                    txtNome.Focus();
+                    return;
+                }
+                else if (!ValidaCPF(mskTxtCPF.Text))
+                {
+                    MessageBox.Show("Esse CPF é invalido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mskTxtCPF.Text = "";
+                    mskTxtCPF.Focus();
+                    return;
+                }
+                else if (TemCPF(mskTxtCPF.Text, CPFAntigo))
+                {
+                    MessageBox.Show("Esse CPF já tem cadastro.", "Cadastrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    mskTxtCPF.Text = "";
+                    mskTxtCPF.Focus();
+                    return;
+                }
+                else if (mskTxtTelCel.Text.Trim() == "")
+                {
+                    MessageBox.Show("Preencha o campo Telefone!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mskTxtTelCel.Text = "";
+                    mskTxtTelCel.Focus();
+                    return;
+                }
+
+
+                HabilitarBotoes(false);
+                HabilitarTxt(false);
+
+                conexao.AbrirConcexao(); // Abre a conexão com o banco de dados
+                if (mudouFoto == "sim")
+                {
+                    // Define a query SQL para atualizar o cadastro de um cliente
+                    sql = "UPDATE cliente SET nome=@nome, endereco=@endereco, cpf=@cpf, telefone=@telefone, foto=@foto WHERE id=@id";
+
+                    // Instancia um novo objeto MySqlCommand, passando a query SQL e a conexão com o banco de dados como parâmetros
+                    cmd = new MySqlCommand(sql, conexao.conex);
+
+                    // Define os parâmetros da query SQL, passando os valores dos campos de cadastro
+                    cmd.Parameters.AddWithValue("id", id);
+                    cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                    cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
+                    cmd.Parameters.AddWithValue("@cpf", mskTxtCPF.Text.Replace(",", "."));
+                    cmd.Parameters.AddWithValue("@telefone", mskTxtTelCel.Text);
+                    cmd.Parameters.AddWithValue("foto", Img());
+                }
+                else if (mudouFoto == "não")
+                {
+                    // Define a query SQL para atualizar o cadastro de um cliente
+                    sql = "UPDATE cliente SET nome=@nome, endereco=@endereco, cpf=@cpf, telefone=@telefone WHERE id=@id";
+
+                    // Instancia um novo objeto MySqlCommand, passando a query SQL e a conexão com o banco de dados como parâmetros
+                    cmd = new MySqlCommand(sql, conexao.conex);
+
+                    // Define os parâmetros da query SQL, passando os valores dos campos de cadastro
+                    cmd.Parameters.AddWithValue("id", id);
+                    cmd.Parameters.AddWithValue("@nome", txtNome.Text);
+                    cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
+                    cmd.Parameters.AddWithValue("@cpf", mskTxtCPF.Text.Replace(",", "."));
+                    cmd.Parameters.AddWithValue("@telefone", mskTxtTelCel.Text);
+                }
+
+
+                cmd.ExecuteNonQuery(); // Executa a query SQL
+                conexao.FecharConexao(); // Fecha a conexão com o banco de dados
+
+                Limpar();
+                btnNovoCadastro.Enabled = true;
+                ListagemGridDB();
+
+                MessageBox.Show("Edição feita com sucesso!", "Editado", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (!ValidaCPF(mskTxtCPF.Text))
+            catch (Exception ex)
             {
-                MessageBox.Show("Esse CPF é invalido.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                mskTxtCPF.Text = "";
-                mskTxtCPF.Focus();
-                return;
+                MessageBox.Show("Ocorreu um erro ao excluir o cliente: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if (TemCPF(mskTxtCPF.Text, CPFAntigo))
-            {
-                MessageBox.Show("Esse CPF já tem cadastro.", "Cadastrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                mskTxtCPF.Text = "";
-                mskTxtCPF.Focus();
-                return;
-            }
-            else if (mskTxtTelCel.Text.Trim() == "")
-            {
-                MessageBox.Show("Preencha o campo Telefone!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                mskTxtTelCel.Text = "";
-                mskTxtTelCel.Focus();
-                return;
-            }
-
-
-            HabilitarBotoes(false);
-            HabilitarTxt(false);
-
-            conexao.AbrirConcexao(); // Abre a conexão com o banco de dados
-            if (mudouFoto == "sim")
-            {
-                // Define a query SQL para atualizar o cadastro de um cliente
-                sql = "UPDATE cliente SET nome=@nome, endereco=@endereco, cpf=@cpf, telefone=@telefone, foto=@foto WHERE id=@id";
-
-                // Instancia um novo objeto MySqlCommand, passando a query SQL e a conexão com o banco de dados como parâmetros
-                cmd = new MySqlCommand(sql, conexao.conex);
-
-                // Define os parâmetros da query SQL, passando os valores dos campos de cadastro
-                cmd.Parameters.AddWithValue("id", id);
-                cmd.Parameters.AddWithValue("@nome", txtNome.Text);
-                cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
-                cmd.Parameters.AddWithValue("@cpf", mskTxtCPF.Text.Replace(",", "."));
-                cmd.Parameters.AddWithValue("@telefone", mskTxtTelCel.Text);
-                cmd.Parameters.AddWithValue("foto", Img());
-            }
-            else if (mudouFoto == "não")
-            {
-                // Define a query SQL para atualizar o cadastro de um cliente
-                sql = "UPDATE cliente SET nome=@nome, endereco=@endereco, cpf=@cpf, telefone=@telefone WHERE id=@id";
-
-                // Instancia um novo objeto MySqlCommand, passando a query SQL e a conexão com o banco de dados como parâmetros
-                cmd = new MySqlCommand(sql, conexao.conex);
-
-                // Define os parâmetros da query SQL, passando os valores dos campos de cadastro
-                cmd.Parameters.AddWithValue("id", id);
-                cmd.Parameters.AddWithValue("@nome", txtNome.Text);
-                cmd.Parameters.AddWithValue("@endereco", txtEndereco.Text);
-                cmd.Parameters.AddWithValue("@cpf", mskTxtCPF.Text.Replace(",", "."));
-                cmd.Parameters.AddWithValue("@telefone", mskTxtTelCel.Text);
-            }
-
-
-            cmd.ExecuteNonQuery(); // Executa a query SQL
-            conexao.FecharConexao(); // Fecha a conexão com o banco de dados
-
-            Limpar();
-            btnNovoCadastro.Enabled = true;
-            ListagemGridDB();
-
-            MessageBox.Show("Edição feita com sucesso!", "Editado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
         }
 
         private void btnFoto_Click(object sender, EventArgs e)
         {
-            OpenFileDialog Foto = new OpenFileDialog();
-            Foto.Filter = "Foto(*.jpg; *.png) | *.jpg; *.png";
-
-            if (Foto.ShowDialog() == DialogResult.OK)
+            try
             {
-                mudouFoto = "sim";
-                fotoUsuario = Foto.FileName.ToString(); // Pega o caminho do arquivo da foto
-                foto.ImageLocation = fotoUsuario;
+                OpenFileDialog Foto = new OpenFileDialog();
+                Foto.Filter = "Foto(*.jpg; *.png) | *.jpg; *.png";
+
+                if (Foto.ShowDialog() == DialogResult.OK)
+                {
+                    mudouFoto = "sim";
+                    fotoUsuario = Foto.FileName.ToString(); // Pega o caminho do arquivo da foto
+                    foto.ImageLocation = fotoUsuario;
+                }
+                else
+                    mudouFoto = "não";
             }
-            else
-                mudouFoto = "não";
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocorreu um erro ao selecionar a foto: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
         }
 
@@ -250,33 +269,40 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
         private void dataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex <= -1)
-                return;
-
-            mudouFoto = "não";
-
-            HabilitarBotoes(true);
-            HabilitarTxt(true);
-            btnNovoCadastro.Enabled = false;
-            btnSalvar.Enabled = false;
-            id = dataGrid.CurrentRow.Cells[0].Value.ToString();
-            txtNome.Text = dataGrid.CurrentRow.Cells[1].Value.ToString();
-            txtEndereco.Text = dataGrid.CurrentRow.Cells[2].Value.ToString();
-            mskTxtCPF.Text = dataGrid.CurrentRow.Cells[3].Value.ToString().Replace(".",",");
-            mskTxtTelCel.Text = dataGrid.CurrentRow.Cells[4].Value.ToString();
-
-            CPFAntigo = mskTxtCPF.Text;
-
-            if (dataGrid.CurrentRow.Cells[5].Value != DBNull.Value)
+            try
             {
-                byte[] imagem = (byte[])dataGrid.Rows[e.RowIndex].Cells[5].Value;
+                if (e.RowIndex <= -1)
+                    return;
 
-                MemoryStream memoryStream = new MemoryStream(imagem);
+                mudouFoto = "não";
 
-                foto.Image = Image.FromStream(memoryStream);
+                HabilitarBotoes(true);
+                HabilitarTxt(true);
+                btnNovoCadastro.Enabled = false;
+                btnSalvar.Enabled = false;
+                id = dataGrid.CurrentRow.Cells[0].Value.ToString();
+                txtNome.Text = dataGrid.CurrentRow.Cells[1].Value.ToString();
+                txtEndereco.Text = dataGrid.CurrentRow.Cells[2].Value.ToString();
+                mskTxtCPF.Text = dataGrid.CurrentRow.Cells[3].Value.ToString().Replace(".", ",");
+                mskTxtTelCel.Text = dataGrid.CurrentRow.Cells[4].Value.ToString();
+
+                CPFAntigo = mskTxtCPF.Text;
+
+                if (dataGrid.CurrentRow.Cells[5].Value != DBNull.Value)
+                {
+                    byte[] imagem = (byte[])dataGrid.Rows[e.RowIndex].Cells[5].Value;
+
+                    MemoryStream memoryStream = new MemoryStream(imagem);
+
+                    foto.Image = Image.FromStream(memoryStream);
+                }
+                else
+                    foto.Image = Properties.Resources.Perfil;
             }
-            else
-                foto.Image = Properties.Resources.Perfil;
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocorreu um erro ao selecionar o registro. Detalhes: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // Método que habilita ou desabilita a edição dos campos de cadastro
@@ -376,26 +402,34 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
         // Método que verifica se um CPF já existe no banco e retorna true se o CPF existe e false caso contrário
         private bool TemCPF(string CPF, string CPFAntigo)
         {
-            if(CPFAntigo.Length > 0)
+            try
             {
-                if (CPF == CPFAntigo)
+                if (CPFAntigo.Length > 0)
+                {
+                    if (CPF == CPFAntigo)
+                        return false;
+                }
+
+                conexao.AbrirConcexao();
+
+                cmd = new MySqlCommand("SELECT * FROM cliente WHERE cpf=@cpf", conexao.conex);
+                cmd.Parameters.AddWithValue("@cpf", CPF.Replace(",", "."));
+                object result = cmd.ExecuteScalar();
+
+                conexao.FecharConexao();
+
+                int count = result != null ? (int)result : 0;
+
+                if (count > 0)
+                    return true;
+                else
                     return false;
-            }   
-            
-            conexao.AbrirConcexao();
-
-            cmd = new MySqlCommand("SELECT * FROM cliente WHERE cpf=@cpf", conexao.conex);
-            cmd.Parameters.AddWithValue("@cpf", CPF.Replace(",", "."));
-            object result = cmd.ExecuteScalar();
-
-            conexao.FecharConexao();
-
-            int count = result != null ? (int)result : 0;
-
-            if (count > 0)
-                return true;
-            else
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ocorreu um erro ao verificar o CPF. Detalhes do erro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
+            }
 
         }
 
@@ -416,57 +450,81 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
         // Função para carregar os dados do banco de dados no grid
         private void ListagemGridDB()
         {
-            conexao.AbrirConcexao(); 
+            try
+            {
+                conexao.AbrirConcexao();
 
-            sql = "SELECT * FROM cliente ORDER BY NOME ASC"; // Define a consulta SQL para selecionar todos os registros da tabela cliente ordenados pelo nome
-            
-            cmd = new MySqlCommand(sql, conexao.conex);
-            
-            MySqlDataAdapter da = new MySqlDataAdapter(); 
-            da.SelectCommand = cmd;  // Atribui o objeto do tipo MySqlCommand ao objeto do tipo MySqlDataAdapter
-            DataTable dt = new DataTable(); 
-            da.Fill(dt); // Preenche o objeto do tipo DataTable com os dados do banco de dados usando o objeto do tipo MySqlDataAdapter
-            dataGrid.DataSource = dt; // Atribui o objeto do tipo DataTable como fonte de dados do grid
-            
-            conexao.FecharConexao(); 
-            
-            FormatacaoGrid(); // Formata as colunas do grid
+                sql = "SELECT * FROM cliente ORDER BY NOME ASC"; // Define a consulta SQL para selecionar todos os registros da tabela cliente ordenados pelo nome
+
+                cmd = new MySqlCommand(sql, conexao.conex);
+
+                MySqlDataAdapter da = new MySqlDataAdapter();
+                da.SelectCommand = cmd;  // Atribui o objeto do tipo MySqlCommand ao objeto do tipo MySqlDataAdapter
+                DataTable dt = new DataTable();
+                da.Fill(dt); // Preenche o objeto do tipo DataTable com os dados do banco de dados usando o objeto do tipo MySqlDataAdapter
+                dataGrid.DataSource = dt; // Atribui o objeto do tipo DataTable como fonte de dados do grid
+
+                conexao.FecharConexao();
+
+                FormatacaoGrid(); // Formata as colunas do grid
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao listar dados: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         // Realiza uma consulta no banco de dados para buscar por um clientes atraves do nomes
         private void Buscar(string nome)
         {
-            conexao.AbrirConcexao();
+            try
+            {
+                conexao.AbrirConcexao();
 
-            sql = "SELECT * FROM cliente WHERE nome LIKE @nome ORDER BY nome ASC";
+                sql = "SELECT * FROM cliente WHERE nome LIKE @nome ORDER BY nome ASC";
 
-            cmd = new MySqlCommand(sql, conexao.conex);
+                cmd = new MySqlCommand(sql, conexao.conex);
 
-            cmd.Parameters.AddWithValue("@nome", nome + "%");
+                cmd.Parameters.AddWithValue("@nome", nome + "%");
 
-            MySqlDataAdapter da = new MySqlDataAdapter();
-            da.SelectCommand = cmd;  
-            DataTable dt = new DataTable();
-            da.Fill(dt); 
-            dataGrid.DataSource = dt;
+                MySqlDataAdapter da = new MySqlDataAdapter();
+                da.SelectCommand = cmd;
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dataGrid.DataSource = dt;
 
-            conexao.FecharConexao();
 
-            FormatacaoGrid();
+                FormatacaoGrid();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Ocorreu um erro ao buscar os dados no banco de dados: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conexao.FecharConexao();
+            }
         }
 
         // metodo para enviar imagem para  banco de dados
         private byte[] Img()
         {
             byte[] imagem = null;
+
             FileStream fileStream = new FileStream(fotoUsuario, FileMode.Open, FileAccess.Read);
             BinaryReader binaryReader = new BinaryReader(fileStream);
 
             imagem = binaryReader.ReadBytes((int)fileStream.Length);
 
             return imagem;
-                
+            
         }
 
+        private void FrmCadastroCliente_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            FrmPrincipal frm = new FrmPrincipal();
+            this.Dispose();
+            frm.Show();
+        }
     } // Fim
 }

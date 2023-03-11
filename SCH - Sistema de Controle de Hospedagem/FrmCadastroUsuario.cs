@@ -36,66 +36,73 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
 
         private void btnSalvar_Click(object sender, EventArgs e)
         {
-            if (txtUsuario.Text.Trim() == "")
+            try
             {
-                MessageBox.Show("Preencha o campo Usuário!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtUsuario.Focus();
-                return;
+                if (txtUsuario.Text.Trim() == "")
+                {
+                    MessageBox.Show("Preencha o campo Usuário!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtUsuario.Focus();
+                    return;
+                }
+                else if (txtEMail.Text.Trim() == "")
+                {
+                    MessageBox.Show("Preencha o campo E-mail!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtEMail.Focus();
+                    return;
+                }
+                else if (!regexEmail.IsMatch(txtEMail.Text.Trim()))
+                {
+                    MessageBox.Show("E-mail é inválido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtEMail.Focus();
+                    return;
+                }
+                else if (txtSenha.Text == "")
+                {
+                    MessageBox.Show("Preencha o campo Senha!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtSenha.Focus();
+                    return;
+                }
+                else if (txtSenha.Text == "")
+                {
+                    MessageBox.Show("Preencha o campo Senha!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtSenha.Focus();
+                    return;
+                }
+
+                else if (txtConfSenha.Text == "")
+                {
+                    MessageBox.Show("Preencha o campo Confirmar Senha!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtConfSenha.Focus();
+                    return;
+                }
+                else if (txtSenha.Text != txtConfSenha.Text)
+                {
+                    MessageBox.Show("As senhas digitada são diferentes!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtSenha.Focus();
+                    return;
+                }
+
+                conexao.AbrirConcexao();
+
+                sql = "INSERT INTO user_adm (user, e_mail, senha) VALUES(@user, @e_mail, @senha)";
+                cmd = new MySqlCommand(sql, conexao.conex);
+
+                cmd.Parameters.AddWithValue("@user", txtUsuario.Text);
+                cmd.Parameters.AddWithValue("@e_mail", txtEMail.Text);
+                cmd.Parameters.AddWithValue("@senha", txtSenha.Text);
+
+                cmd.ExecuteNonQuery();
+                conexao.FecharConexao();
+
+                Limpar();
+                HabilitarCampus(false);
+
+                MessageBox.Show("Registro salvo com sucesso!", "Salvo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            else if (txtEMail.Text.Trim() == "" )
+            catch (Exception ex)
             {
-                MessageBox.Show("Preencha o campo E-mail!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtEMail.Focus();
-                return;
+                MessageBox.Show("Ocorreu um erro ao tentar salvar o registro: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if (!regexEmail.IsMatch(txtEMail.Text.Trim()))
-            {
-                MessageBox.Show("E-mail é inválido!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtEMail.Focus();
-                return;
-            } 
-            else if(txtSenha.Text == "")
-            {
-                MessageBox.Show("Preencha o campo Senha!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtSenha.Focus();
-                return;
-            }
-            else if (txtSenha.Text == "")
-            {
-                MessageBox.Show("Preencha o campo Senha!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtSenha.Focus();
-                return;
-            }
-
-            else if (txtConfSenha.Text == "")
-            {
-                MessageBox.Show("Preencha o campo Confirmar Senha!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtConfSenha.Focus();
-                return;
-            }
-            else if (txtSenha.Text != txtConfSenha.Text)
-            {
-                MessageBox.Show("As senhas digitada são diferentes!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtSenha.Focus();
-                return;
-            }
-
-            conexao.AbrirConcexao();
-
-            sql = "INSERT INTO user_adm (user, e_mail, senha) VALUES(@user, @e_mail, @senha)";
-            cmd = new MySqlCommand(sql, conexao.conex);
-
-            cmd.Parameters.AddWithValue("@user", txtUsuario.Text);
-            cmd.Parameters.AddWithValue("@e_mail", txtEMail.Text);
-            cmd.Parameters.AddWithValue("@senha", txtSenha.Text);
-
-            cmd.ExecuteNonQuery();
-            conexao.FecharConexao();
-
-            Limpar();
-            HabilitarCampus(false);
-
-            MessageBox.Show("Registro salvo com sucesso!", "Salvo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void HabilitarCampus(bool hb = false)
@@ -116,5 +123,11 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
             txtConfSenha.Text = "";
         }
 
+        private void FrmCadastroUsuario_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            FrmPrincipal frm = new FrmPrincipal();
+            this.Dispose();
+            frm.Show();
+        }
     }
 }
