@@ -58,9 +58,9 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
                 // Abre o formulário principal e esconde o formulário de login
                 FrmPrincipal frm = new FrmPrincipal();
                 frm.Show();
-                this.Hide();
+                this.Close();
             }
-            catch (Exception ex)
+            catch (Exception c)
             {
                 MessageBox.Show("Ocorreu um erro ao processar a solicitação: " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

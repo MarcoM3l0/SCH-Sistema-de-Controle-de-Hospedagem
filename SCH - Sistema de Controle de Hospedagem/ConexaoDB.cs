@@ -26,9 +26,9 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
                 conex = new MySqlConnection(conexao);
                 conex.Open();
             }
-            catch (Exception err)
+            catch (Exception ex)
             {
-                MessageBox.Show("Problema ao abrir o servidor. Erro: " + err.Message);
+                MessageBox.Show("Problema ao abrir o servidor. Erro: " + ex.Message);
             }
         }
 
@@ -39,10 +39,10 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem
                 conex = new MySqlConnection(conexao);
                 conex.Close();
             }
-            catch (Exception err)
+            catch (Exception ex)
             {
-                MessageBox.Show("Problema ao fechar o servidor. Erro: " + err.Message);
+                MessageBox.Show("Problema ao fechar o servidor. Erro: " + ex.Message);
             }
-        }
+        } 
     }
 }

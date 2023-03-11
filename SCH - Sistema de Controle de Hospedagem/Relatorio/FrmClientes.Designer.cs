@@ -31,20 +31,36 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem.Relatorio
         {
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmClientes));
-            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.bd_forpro_hotelDataSet = new SCH___Sistema_de_Controle_de_Hospedagem.bd_forpro_hotelDataSet();
             this.clienteBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.bd_forpro_hotelDataSet = new SCH___Sistema_de_Controle_de_Hospedagem.bd_forpro_hotelDataSet();
+            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.clienteTableAdapter = new SCH___Sistema_de_Controle_de_Hospedagem.bd_forpro_hotelDataSetTableAdapters.clienteTableAdapter();
-            ((System.ComponentModel.ISupportInitialize)(this.bd_forpro_hotelDataSet)).BeginInit();
+            this.useradmBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.user_admTableAdapter = new SCH___Sistema_de_Controle_de_Hospedagem.bd_forpro_hotelDataSetTableAdapters.user_admTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.clienteBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bd_forpro_hotelDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.useradmBindingSource)).BeginInit();
             this.SuspendLayout();
+            // 
+            // clienteBindingSource
+            // 
+            this.clienteBindingSource.DataMember = "cliente";
+            this.clienteBindingSource.DataSource = this.bd_forpro_hotelDataSet;
+            // 
+            // bd_forpro_hotelDataSet
+            // 
+            this.bd_forpro_hotelDataSet.DataSetName = "bd_forpro_hotelDataSet";
+            this.bd_forpro_hotelDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // reportViewer1
             // 
-            reportDataSource1.Name = "DataSet1";
-            reportDataSource1.Value = this.clienteBindingSource;
+            reportDataSource1.Name = "DataSetClientes";
+            reportDataSource2.Name = "DataSetUsuarios";
+            reportDataSource2.Value = this.useradmBindingSource;
             this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource2);
             this.reportViewer1.LocalReport.ReportEmbeddedResource = "SCH___Sistema_de_Controle_de_Hospedagem.Relatorio.RelClientes.rdlc";
             this.reportViewer1.Location = new System.Drawing.Point(12, 12);
             this.reportViewer1.Name = "reportViewer1";
@@ -52,19 +68,18 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem.Relatorio
             this.reportViewer1.Size = new System.Drawing.Size(776, 426);
             this.reportViewer1.TabIndex = 0;
             // 
-            // bd_forpro_hotelDataSet
-            // 
-            this.bd_forpro_hotelDataSet.DataSetName = "bd_forpro_hotelDataSet";
-            this.bd_forpro_hotelDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // clienteBindingSource
-            // 
-            this.clienteBindingSource.DataMember = "cliente";
-            this.clienteBindingSource.DataSource = this.bd_forpro_hotelDataSet;
-            // 
             // clienteTableAdapter
             // 
             this.clienteTableAdapter.ClearBeforeFill = true;
+            // 
+            // useradmBindingSource
+            // 
+            this.useradmBindingSource.DataMember = "user_adm";
+            this.useradmBindingSource.DataSource = this.bd_forpro_hotelDataSet;
+            // 
+            // user_admTableAdapter
+            // 
+            this.user_admTableAdapter.ClearBeforeFill = true;
             // 
             // FrmClientes
             // 
@@ -79,8 +94,9 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem.Relatorio
             this.Text = "Relatório de Cliente";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmClientes_FormClosed);
             this.Load += new System.EventHandler(this.FrmClientes_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.bd_forpro_hotelDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.clienteBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bd_forpro_hotelDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.useradmBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -91,5 +107,7 @@ namespace SCH___Sistema_de_Controle_de_Hospedagem.Relatorio
         private bd_forpro_hotelDataSet bd_forpro_hotelDataSet;
         private System.Windows.Forms.BindingSource clienteBindingSource;
         private bd_forpro_hotelDataSetTableAdapters.clienteTableAdapter clienteTableAdapter;
+        private System.Windows.Forms.BindingSource useradmBindingSource;
+        private bd_forpro_hotelDataSetTableAdapters.user_admTableAdapter user_admTableAdapter;
     }
 }
